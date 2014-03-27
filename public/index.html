@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="styles/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <title>Is Loki Here Yet?</title>
   </head>
   <body role="document">
@@ -15,8 +14,22 @@
       </div>
       <h3 class="pull-left">That's in</h3><h3 id="countdown" class="pull-right"></h3>
     </div>
-    <script src="scripts/jquery.js"></script>
-    <script src="scripts/bootstrap.js"></script>
-    <script src="scripts/require.js" data-main="scripts/countdown"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script type="text/javascript" src="//jashkenas.github.io/coffee-script/extras/coffee-script.js"></script>
+    <script type="text/coffeescript">
+      quantify = (quantity, unit) ->
+        return "#{quantity} #{unit}#{if quantity != 1 then 's' else ''}"
+
+      getRemainingString = ->
+        delta = moment.duration(moment('2014-04-11T22:41') - moment())
+        return "#{quantify(delta.days(), 'day')}, #{quantify(delta.hours(), 'hour')}, #{quantify(delta.minutes(), 'minute')}, #{quantify(delta.seconds(), 'second')}"
+
+      update = ->
+        $('#countdown').html(getRemainingString())
+
+      $ () ->
+        setInterval(update, 1000)
+    </script>
   </body>
 </html>
