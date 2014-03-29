@@ -18,18 +18,30 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
     <script type="text/javascript" src="//jashkenas.github.io/coffee-script/extras/coffee-script.js"></script>
     <script type="text/coffeescript">
-      quantify = (quantity, unit) ->
-        return "#{quantity} #{unit}#{if quantity != 1 then 's' else ''}"
-
       getRemainingString = ->
         delta = moment.duration(moment('2014-04-11T22:41') - moment())
-        return "#{quantify(delta.days(), 'day')}, #{quantify(delta.hours(), 'hour')}, #{quantify(delta.minutes(), 'minute')}, #{quantify(delta.seconds(), 'second')}"
+
+        d = delta.days()
+        h = delta.hours()
+        m = delta.minutes()
+        s = delta.seconds()
+        ms = delta.milliseconds()
+
+        dStr = if d > 0 then "#{d} day#{if d > 1 then 's' else ''}, " else ""
+        if ms > 100
+          msStr = "#{ms}"
+        else if ms > 10
+          msStr = "0#{ms}"
+        else
+          msStr = "00#{ms}"
+
+        return "#{dStr}#{if h < 10 then '0' else ''}#{h}:#{if m < 10 then '0' else ''}#{m}:#{if s < 10 then '0' else ''}#{s}.#{msStr}"
 
       update = ->
         $('#countdown').html(getRemainingString())
 
       $ () ->
-        setInterval(update, 1000)
+        setInterval(update, 10)
     </script>
   </body>
 </html>
