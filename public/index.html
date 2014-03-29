@@ -38,7 +38,7 @@
         return "#{dStr}#{if h < 10 then '0' else ''}#{h}:#{if m < 10 then '0' else ''}#{m}:#{if s < 10 then '0' else ''}#{s}.#{msStr}"
 
       update = ->
-        $('#countdown').html(getRemainingString())
+        $('#countdown').text(getRemainingString())
 
       $ () ->
         setInterval(update, 10)
